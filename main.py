@@ -1,5 +1,6 @@
 from random import randint
 import time
+import matplotlib.pyplot as plt
 
 insertion_results = []
 binary_insertion_results = []
@@ -157,10 +158,14 @@ def bubble_sort(arr):
                 arr[j], arr[j+1] = arr[j+1], arr[j]
 
 
-def gen_random_arr():
+def gen_random_arr(num):
     arr = []
-    for i in range(2000):
-        arr.append(randint(0, 50000))
+    if num == 0:
+        for i in range(1000):
+            arr.append(randint(0, 50000))
+    else:
+        for i in range((num+1) * 1000):
+            arr.append(randint(0, 50000))
     return arr
 
 
@@ -169,7 +174,7 @@ def test_insertion_sort(arr):
     start = time.time()
     insertion_sort(sort_arr)
     end = time.time()
-    insertion_results.append(end-start)
+    insertion_results.append(float(str(end-start)[0:6]))
 
 
 def test_binary_insertion_sort(arr):
@@ -177,7 +182,7 @@ def test_binary_insertion_sort(arr):
     start = time.time()
     insertion_binary_sort(sort_arr)
     end = time.time()
-    binary_insertion_results.append(end-start)
+    binary_insertion_results.append(float(str(end-start)[0:6]))
 
 
 def test_merge_sort(arr):
@@ -185,7 +190,7 @@ def test_merge_sort(arr):
     start = time.time()
     merge_sort(sort_arr)
     end = time.time()
-    merge_results.append(end-start)
+    merge_results.append(float(str(end-start)[0:6]))
 
 
 def test_heap_sort(arr):
@@ -193,7 +198,7 @@ def test_heap_sort(arr):
     start = time.time()
     heap_sort(sort_arr)
     end = time.time()
-    heap_results.append(end-start)
+    heap_results.append(float(str(end-start)[0:6]))
 
 
 def test_bubble_sort(arr):
@@ -201,19 +206,30 @@ def test_bubble_sort(arr):
     start = time.time()
     bubble_sort(sort_arr)
     end = time.time()
-    bubble_results.append(end-start)
+    bubble_results.append(float(str(end-start)[0:6]))
 
 if __name__ == "__main__":
 
     for i in range(8):
-        test_arr = gen_random_arr()
+        test_arr = gen_random_arr(i)
         test_insertion_sort(test_arr)
         test_binary_insertion_sort(test_arr)
         test_merge_sort(test_arr)
         test_heap_sort(test_arr)
         test_bubble_sort(test_arr)
-    print(insertion_results)
-    print(binary_insertion_results)
-    print(merge_results)
-    print(heap_results)
-    print(bubble_results)
+    print("Insertion Sort Results: " + str(insertion_results))
+    print("Binary Insertion Sort Results: " + str(binary_insertion_results))
+    print("Merge Sort Results: " + str(merge_results))
+    print("Heap Sort Results: " + str(heap_results))
+    print("Bubble Sort Results: " + str(bubble_results))
+
+    count = [1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000]
+    plt.plot(count, insertion_results, label="Insertion")
+    plt.plot(count, binary_insertion_results, label="Binary Insertion")
+    plt.plot(count, merge_results, label="Merge")
+    plt.plot(count, heap_results, label="Heap")
+    plt.plot(count, bubble_results, label="Bubble")
+    plt.xlabel("Runs")
+    plt.ylabel('Time')
+    plt.legend()
+    plt.show()
