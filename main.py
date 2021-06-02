@@ -1,4 +1,11 @@
 from random import randint
+import time
+
+insertion_results = []
+binary_insertion_results = []
+merge_results = []
+heap_results = []
+bubble_results = []
 
 
 def insertion_sort(arr):
@@ -153,11 +160,60 @@ def bubble_sort(arr):
 def gen_random_arr():
     arr = []
     for i in range(2000):
-        arr[i] = randint(0, 50000)
+        arr.append(randint(0, 50000))
     return arr
 
 
+def test_insertion_sort(arr):
+    sort_arr = arr.copy()
+    start = time.time()
+    insertion_sort(sort_arr)
+    end = time.time()
+    insertion_results.append(end-start)
+
+
+def test_binary_insertion_sort(arr):
+    sort_arr = arr.copy()
+    start = time.time()
+    insertion_binary_sort(sort_arr)
+    end = time.time()
+    binary_insertion_results.append(end-start)
+
+
+def test_merge_sort(arr):
+    sort_arr = arr.copy()
+    start = time.time()
+    merge_sort(sort_arr)
+    end = time.time()
+    merge_results.append(end-start)
+
+
+def test_heap_sort(arr):
+    sort_arr = arr.copy()
+    start = time.time()
+    heap_sort(sort_arr)
+    end = time.time()
+    heap_results.append(end-start)
+
+
+def test_bubble_sort(arr):
+    sort_arr = arr.copy()
+    start = time.time()
+    bubble_sort(sort_arr)
+    end = time.time()
+    bubble_results.append(end-start)
+
 if __name__ == "__main__":
-    nums = [12, 32, 125, 5918, 1, 2, 14, 3, 5, 1, 0]
-    bubble_sort(nums)
-    print(nums)
+
+    for i in range(8):
+        test_arr = gen_random_arr()
+        test_insertion_sort(test_arr)
+        test_binary_insertion_sort(test_arr)
+        test_merge_sort(test_arr)
+        test_heap_sort(test_arr)
+        test_bubble_sort(test_arr)
+    print(insertion_results)
+    print(binary_insertion_results)
+    print(merge_results)
+    print(heap_results)
+    print(bubble_results)
