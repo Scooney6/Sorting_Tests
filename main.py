@@ -2,6 +2,11 @@ from random import randint
 import time
 import matplotlib.pyplot as plt
 
+temp_insertion_results = []
+temp_binary_insertion_results = []
+temp_merge_results = []
+temp_heap_results = []
+temp_bubble_results = []
 insertion_results = []
 binary_insertion_results = []
 merge_results = []
@@ -174,7 +179,7 @@ def test_insertion_sort(arr):
     start = time.time()
     insertion_sort(sort_arr)
     end = time.time()
-    insertion_results.append(float(str(end-start)[0:6]))
+    temp_insertion_results.append(round(end-start, 5))
 
 
 def test_binary_insertion_sort(arr):
@@ -182,7 +187,7 @@ def test_binary_insertion_sort(arr):
     start = time.time()
     insertion_binary_sort(sort_arr)
     end = time.time()
-    binary_insertion_results.append(float(str(end-start)[0:6]))
+    temp_binary_insertion_results.append(round(end-start, 5))
 
 
 def test_merge_sort(arr):
@@ -190,7 +195,7 @@ def test_merge_sort(arr):
     start = time.time()
     merge_sort(sort_arr)
     end = time.time()
-    merge_results.append(float(str(end-start)[0:6]))
+    temp_merge_results.append(round(end-start, 5))
 
 
 def test_heap_sort(arr):
@@ -198,7 +203,7 @@ def test_heap_sort(arr):
     start = time.time()
     heap_sort(sort_arr)
     end = time.time()
-    heap_results.append(float(str(end-start)[0:6]))
+    temp_heap_results.append(round(end-start, 5))
 
 
 def test_bubble_sort(arr):
@@ -206,17 +211,43 @@ def test_bubble_sort(arr):
     start = time.time()
     bubble_sort(sort_arr)
     end = time.time()
-    bubble_results.append(float(str(end-start)[0:6]))
+    temp_bubble_results.append(round(end-start, 5))
+
+
+def avgarr(arr):
+    temp = 0
+    for k in range(len(arr)):
+        temp = temp + arr[k]
+    return (round(temp / len(arr), 5))
+
+
+def lowest(arr):
+    temp = arr[0]
+    for k in range(len(arr)):
+        if temp > arr[k]:
+            temp = arr[k]
+    return (round(temp, 5))
 
 if __name__ == "__main__":
-
     for i in range(8):
-        test_arr = gen_random_arr(i)
-        test_insertion_sort(test_arr)
-        test_binary_insertion_sort(test_arr)
-        test_merge_sort(test_arr)
-        test_heap_sort(test_arr)
-        test_bubble_sort(test_arr)
+        for j in range(3):
+            test_arr = gen_random_arr(i)
+            test_insertion_sort(test_arr)
+            test_binary_insertion_sort(test_arr)
+            test_merge_sort(test_arr)
+            test_heap_sort(test_arr)
+            test_bubble_sort(test_arr)
+        insertion_results.append(lowest(temp_insertion_results))
+        binary_insertion_results.append(lowest(temp_binary_insertion_results))
+        merge_results.append(lowest(temp_merge_results))
+        heap_results.append(lowest(temp_heap_results))
+        bubble_results.append(lowest(temp_bubble_results))
+        temp_insertion_results = []
+        temp_binary_insertion_results = []
+        temp_merge_results = []
+        temp_heap_results = []
+        temp_bubble_results = []
+
     print("Insertion Sort Results: " + str(insertion_results))
     print("Binary Insertion Sort Results: " + str(binary_insertion_results))
     print("Merge Sort Results: " + str(merge_results))
